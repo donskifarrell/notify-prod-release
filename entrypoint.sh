@@ -20,13 +20,13 @@
 echo "List and Notify of the last release"
 echo $JIRA_PREFIX
 echo "$GITHUB_EVENT_PATH"
-echo pwd
+echo `pwd`
 
 # Config
 product_name=${PRODUCT_NAME:-Product}
 timestamp=`date +%s`
 slack_webhook_url="$SLACK_WEBHOOK_URL"
-prev_push_commit_hash=`cat "$GITHUB_EVENT_PATH" | jq '.before'`
+prev_push_commit_hash=`cat "$GITHUB_EVENT_PATH" | jq '.before' | sed "s/\"//g"`
 
 echo $prev_push_commit_hash
 
