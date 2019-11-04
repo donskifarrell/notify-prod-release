@@ -19,12 +19,13 @@
 
 echo "List and Notify of the last release"
 echo $JIRA_PREFIX
+echo "$GITHUB_EVENT_PATH"
 
 # Config
 product_name=${PRODUCT_NAME:-Product}
 timestamp=`date +%s`
 slack_webhook_url="$SLACK_WEBHOOK_URL"
-prev_push_commit_hash=`echo "$GITHUB_EVENT_PATH" | jq '.before'`
+prev_push_commit_hash=`cat "$GITHUB_EVENT_PATH" | jq '.before'`
 
 tmp_file_jira_tickets="tmp-jira-tickets-$timestamp.txt"
 tmp_file_other_commits="tmp-other-commits-$timestamp.txt"
