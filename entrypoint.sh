@@ -17,6 +17,9 @@
 # 
 ##
 
+echo "List and Notify of the last release"
+echo $JIRA_PREFIX
+
 # Config
 product_name=${PRODUCT_NAME:-Product}
 timestamp=`date +%s`
@@ -45,7 +48,7 @@ Jira Tickets
 if [ ! -f "$tmp_file_jira_tickets" ]; then
   echo "
   No JIRA tickets detected since last push." >> $tmp_file_output
-fi
+else
 
 while read t ; \
 do \
@@ -71,6 +74,7 @@ do \
 
 done <$tmp_file_jira_tickets
 
+fi
 
 # Print out the remaining other commits along with author details
 if [ -f "$tmp_file_other_commits" ]; 
