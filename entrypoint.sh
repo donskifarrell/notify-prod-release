@@ -19,6 +19,8 @@
 
 echo "List and Notify of the last release"
 echo $JIRA_PREFIX
+echo $JIRA_USER_EMAIL
+echo $JIRA_API_TOKEN
 echo "$GITHUB_EVENT_PATH"
 echo `pwd`
 
@@ -57,8 +59,9 @@ else
 while read t ; \
 do \
   ticket_no="$(echo "$t" | grep -o [A-Z]+-[0-9]+ -E)"
-  ticket_json="$(curl --silent -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN -H "Content-Type: application/json" https://$JIRA_PREFIX.atlassian.net/rest/api/2/issue/$ticket_no)"
-  
+  ticket_json="$(curl -v -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN -H "Content-Type: application/json" https://$JIRA_PREFIX.atlassian.net/rest/api/2/issue/$ticket_no)"
+  echo $ticket_json
+
   if [ -z "$ticket_json" ];
   then
     ticket_type=`echo "${ticket_json}" | jq '.fields.issuetype.name' | sed "s/\"//g"`
@@ -107,3 +110,5 @@ cat $tmp_file_output
 rm $tmp_file_jira_tickets
 rm $tmp_file_other_commits
 rm $tmp_file_output
+
+echo Done
