@@ -49,7 +49,7 @@ else
 while read t ; \
 do \
   ticket_no="$(echo "$t" | grep -o [A-Z]+-[0-9]+ -E)"
-  ticket_json="$(curl -v -u --silent $JIRA_USER_EMAIL:$JIRA_API_TOKEN -H "Content-Type: application/json" https://$JIRA_PREFIX.atlassian.net/rest/api/2/issue/$ticket_no)"
+  ticket_json="$(curl --silent -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN -H "Content-Type: application/json" https://$JIRA_PREFIX.atlassian.net/rest/api/2/issue/$ticket_no)"
 
   if [ -z "$ticket_json" ];
   then
